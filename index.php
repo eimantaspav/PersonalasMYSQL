@@ -12,7 +12,32 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-// Update name  
+
+
+// Add new project
+if (isset($_POST['newProject'])) {
+  $projectName = $_POST['newProject'];
+  $sql = "INSERT INTO projects (project)
+  VALUES ('$projectName')";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
+
+// Add new staff member
+if (isset($_POST['newMember'])) {
+
+  // $myvalue = 'Test me more';
+  // $arr = explode(' ', trim($myvalue));
+  // echo $arr[0]; 
+
+  $memberName = $_POST['newMember'];
+  $sql = "INSERT INTO staff (Name, Surname)
+  VALUES ('$memberName', '$memberName')";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
+
+// Update staff name  
 if (isset($_POST['updateName'])) {
   $ID = $_POST['updateName'];
   $name = $_POST['name'];
@@ -21,7 +46,16 @@ if (isset($_POST['updateName'])) {
   header("Refresh:0");
 }
 
-// Update surname  
+// Update project name  
+if (isset($_POST['updatePName'])) {
+  $ID = $_POST['updatePName'];
+  $name = $_POST['pname'];
+  $sql = "UPDATE projects SET Project='$name' WHERE ID=$ID";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
+
+// Update staffsurname  
 if (isset($_POST['updateSurname'])) {
   $ID = $_POST['updateSurname'];
   $surname = $_POST['surname'];
@@ -29,7 +63,21 @@ if (isset($_POST['updateSurname'])) {
   mysqli_query($conn, $sql);
   header("Refresh:0");
 }
+// Delete  staff by ID
+if (isset($_POST['del'])) {
+  $delID = $_POST['del'];
+  $sql = "DELETE FROM staff WHERE id=$delID";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
 
+// Delete  projects by ID
+if (isset($_POST['delP'])) {
+  $delID = $_POST['delP'];
+  $sql = "DELETE FROM projects WHERE id=$delID";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +112,6 @@ if (isset($_POST['updateSurname'])) {
   $sqlProjects = "SELECT ID, Project FROM projects";
   $result = $conn->query($sqlProjects);
   if ($_SERVER["REQUEST_URI"] == '/PersonalasMYSQL/' or $_GET["path"] != 'darbuotojai') {
-    // output data of each row
     if ($result->num_rows > 0) {
       echo
         "<tr>
@@ -75,10 +122,17 @@ if (isset($_POST['updateSurname'])) {
     </tr>";
       while ($row = $result->fetch_assoc()) {
         echo
-          "<tr><td>" . $row["ID"] . "</td>" .
-            "<td>" . $row["Project"] . "</td> 
+          "<tr><td>" . $row["ID"] .  "</td>" .
+            "<td>" . $row["Project"] . "<form method='POST'>
+            <input type='hidden' name='updatePName' value='" . $row["ID"] . "'>
+            <input type='text' name='pname' value=''>
+            <input  class='buttons' type='submit' value='Update Project Name'>
+           </form>" . "</td> 
           <td>Asigned##</td>
-          <td>Action##</td>
+          <td><form method='POST'>
+          <input type='hidden' name='delP' value='" . $row["ID"] . "'>
+          <input  class='buttons' type='submit' value='DELETE'>
+         </form></td>
 
         </tr>";
       }
@@ -119,11 +173,19 @@ if (isset($_POST['updateSurname'])) {
     }
   }
 
+  echo '</table><br>';
 
-
-
-
-  echo '</table>';
+  if ($_SERVER["REQUEST_URI"] == '/PersonalasMYSQL/' or $_GET["path"] != 'darbuotojai') {
+    echo '<form method="POST">
+<input type="text" name="newProject" value="">
+<input type="submit" value="Add New Project">
+</form>';
+  } else if ($_GET["path"] = 'darbuotojai') {
+    echo '<form method="POST">
+<input type="text" name="newMember" value="">
+<input type="submit" value="Add New Member">
+</form>';
+  }
 
   echo '<p class="currentDir">Current directory: ' . $_GET["path"] . '</p>';
   echo '<p class="currentDir">Current directory: ' . $_SERVER["REQUEST_URI"] . '</p>';
