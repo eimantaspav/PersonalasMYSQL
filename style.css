@@ -1,0 +1,75 @@
+p {
+color: white;
+}
+body {
+    background-color: #162447;
+}
+
+.menu {
+    display: block;
+    background-color: #1f4068;
+    margin-top: 20px;
+}
+
+/*MENU LEFT  */
+
+.menu>.menu_left {
+    padding: 70px 0;
+    background-color: #1f4068;
+    float: left;
+    width: 50%;
+}
+
+.menu>.menu_left>a {
+    float: left;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    margin-left: 30px;
+}
+
+/* MENU RIGHT  */
+
+.menu>.menu_right {
+    background-color: #1f4068;
+    padding: 70px 0;
+    float: right;
+    width: 50%;
+}
+
+.menu>.menu_right>a {
+    float: right;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    margin-right: 30px;
+}
+
+/* TABLE  */
+
+.table {
+    width: 100%;
+    border: 1px solid #1f4068;
+    margin: 0 auto;
+    margin-top: 1%;
+    border-radius: 0.2em;
+    color: white;
+    font-weight: 900;
+}
+
+tr, td {
+    width: 30%;
+    color: white;
+    border: 1px solid #1f4068;
+    margin: 0 auto;
+    margin-top: 1%;
+    border-radius: 0.2em;
+    color: white;
+    font-weight: 900;
+    line-height: 50px;
+    font-size: 40px;
+}
