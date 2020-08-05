@@ -1,17 +1,34 @@
 <?php
 
+// Connection  
 $servername = "127.0.0.1";
 $username = "root";
 $password = "mysql";
 $db = "projectstaff";
-// Create connection
+
 $conn = mysqli_connect($servername, $username, $password, $db);
-// Check connection
+
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
+// Update name  
+if (isset($_POST['updateName'])) {
+  $ID = $_POST['updateName'];
+  $name = $_POST['name'];
+  $sql = "UPDATE staff SET Name='$name' WHERE ID=$ID";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
 
+// Update surname  
+if (isset($_POST['updateSurname'])) {
+  $ID = $_POST['updateSurname'];
+  $surname = $_POST['surname'];
+  $sql = "UPDATE staff SET Surname='$surname' WHERE ID=$ID";
+  mysqli_query($conn, $sql);
+  header("Refresh:0");
+}
 
 
 ?>
@@ -83,16 +100,29 @@ if (!$conn) {
       echo
         "<tr>
         <td>" . $row["ID"] . "</td>" .
-          "<td>" . $row["Name"] . "</td>" .
-          "<td>" . $row["Surname"] . "</td>
-          <td>Action###</td>
+          "<td>" . $row["Name"] . "<form method='POST'>
+          <input type='hidden' name='updateName' value='" . $row["ID"] . "'>
+          <input type='text' name='name' value=''>
+          <input  class='buttons' type='submit' value='Update Name'>
+         </form>" . "</td>" .
+          "<td>" . $row["Surname"] . " <form method='POST'>
+          <input type='hidden' name='updateSurname' value='" . $row["ID"] . "'>
+          <input type='text' name='surname' value=''>
+          <input  class='buttons' type='submit' value='Update Surname'>
+         </form>" . "</td>
+          <td><form method='POST'>
+          <input type='hidden' name='del' value='" . $row["ID"] . "'>
+          <input  class='buttons' type='submit' value='DELETE'>
+         </form>
+         </td>
           </tr>";
     }
   }
 
 
 
-  $conn->close();
+
+
   echo '</table>';
 
   echo '<p class="currentDir">Current directory: ' . $_GET["path"] . '</p>';
@@ -100,6 +130,8 @@ if (!$conn) {
   echo '<p class="currentDir">Current directory: ' . $_SERVER["QUERY_STRING"] . '</p>';
 
 
+
+  $conn->close();
 
   ?>
 </body>
