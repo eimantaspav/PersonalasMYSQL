@@ -25,14 +25,9 @@ if (isset($_POST['newProject'])) {
 
 // Add new staff member
 if (isset($_POST['newMember'])) {
-
-  // $myvalue = 'Test me more';
-  // $arr = explode(' ', trim($myvalue));
-  // echo $arr[0]; 
-
   $memberName = $_POST['newMember'];
-  $sql = "INSERT INTO staff (Name, Surname)
-  VALUES ('$memberName', '$memberName')";
+  $sql = "INSERT INTO staff (Name)
+  VALUES ('$memberName')";
   mysqli_query($conn, $sql);
   header("Refresh:0");
 }
@@ -55,14 +50,7 @@ if (isset($_POST['updatePName'])) {
   header("Refresh:0");
 }
 
-// Update staffsurname  
-if (isset($_POST['updateSurname'])) {
-  $ID = $_POST['updateSurname'];
-  $surname = $_POST['surname'];
-  $sql = "UPDATE staff SET Surname='$surname' WHERE ID=$ID";
-  mysqli_query($conn, $sql);
-  header("Refresh:0");
-}
+
 // Delete  staff by ID
 if (isset($_POST['del'])) {
   $delID = $_POST['del'];
@@ -115,23 +103,23 @@ if (isset($_POST['delP'])) {
     if ($result->num_rows > 0) {
       echo
         "<tr>
-    <td>ID</td>
+    <td class='small-col'>ID</td>
     <td>Project</td>
     <td>Asigned</td>
-    <td>Actions</td>;
+    <td class='small-col'>Actions</td>;
     </tr>";
       while ($row = $result->fetch_assoc()) {
         echo
-          "<tr><td>" . $row["ID"] .  "</td>" .
+          "<tr><td class='small-col'>" . $row["ID"] .  "</td>" .
             "<td>" . $row["Project"] . "<form method='POST'>
             <input type='hidden' name='updatePName' value='" . $row["ID"] . "'>
             <input type='text' name='pname' value=''>
-            <input  class='buttons' type='submit' value='Update Project Name'>
+            <input  class='buttons' type='submit' value='CHANGE PROJECT NAME'>
            </form>" . "</td> 
           <td>Asigned##</td>
-          <td><form method='POST'>
+          <td class='small-col'><form method='POST'>
           <input type='hidden' name='delP' value='" . $row["ID"] . "'>
-          <input  class='buttons' type='submit' value='DELETE'>
+          <input  class='buttons delete' type='submit' value='DELETE'>
          </form></td>
 
         </tr>";
@@ -140,33 +128,29 @@ if (isset($_POST['delP'])) {
       echo "0 results";
     }
   } else if ($_GET["path"] = 'darbuotojai') {
-    $sqlProjects = "SELECT ID, Name, Surname FROM staff";
+    $sqlProjects = "SELECT ID, Name FROM staff";
     $result = $conn->query($sqlProjects);
 
     echo "<tr>
-    <td>ID</td>
+    <td class='small-col'>ID</td>
     <td>Name</td>
-    <td>Surname</td>
-    <td>Action</td>
+    <td>Asigned Course</td>
+    <td class='small-col'>Action</td>
 
     </tr>";
     while ($row = $result->fetch_assoc()) {
       echo
         "<tr>
-        <td>" . $row["ID"] . "</td>" .
+        <td class='small-col'>" . $row["ID"] . "</td>" .
           "<td>" . $row["Name"] . "<form method='POST'>
           <input type='hidden' name='updateName' value='" . $row["ID"] . "'>
           <input type='text' name='name' value=''>
-          <input  class='buttons' type='submit' value='Update Name'>
+          <input  class='buttons' type='submit' value='CHANGE NAME'>
          </form>" . "</td>" .
-          "<td>" . $row["Surname"] . " <form method='POST'>
-          <input type='hidden' name='updateSurname' value='" . $row["ID"] . "'>
-          <input type='text' name='surname' value=''>
-          <input  class='buttons' type='submit' value='Update Surname'>
-         </form>" . "</td>
-          <td><form method='POST'>
+          '<td>Asigned Course</td>' .
+          "<td class='small-col'><form method='POST'>
           <input type='hidden' name='del' value='" . $row["ID"] . "'>
-          <input  class='buttons' type='submit' value='DELETE'>
+          <input  class='buttons delete' type='submit' value='DELETE'>
          </form>
          </td>
           </tr>";
@@ -178,12 +162,12 @@ if (isset($_POST['delP'])) {
   if ($_SERVER["REQUEST_URI"] == '/PersonalasMYSQL/' or $_GET["path"] != 'darbuotojai') {
     echo '<form method="POST">
 <input type="text" name="newProject" value="">
-<input type="submit" value="Add New Project">
+<input type="submit" value="ADD NEW PROJECT">
 </form>';
   } else if ($_GET["path"] = 'darbuotojai') {
     echo '<form method="POST">
 <input type="text" name="newMember" value="">
-<input type="submit" value="Add New Member">
+<input type="submit" value="ADD NEW MEMBER">
 </form>';
   }
 
