@@ -9,7 +9,7 @@ body {
 .menu {
     display: block;
     background-color: #1f4068;
-    margin-top: 20px;
+    margin-top: 100px;
 }
 
 /*MENU LEFT  */
@@ -55,8 +55,6 @@ body {
 .table {
     width: 100%;
     border: 1px solid #1f4068;
-    margin: 0 auto;
-    margin-top: 1%;
     border-radius: 0.2em;
     color: white;
     font-weight: 900;
@@ -66,7 +64,6 @@ td {
     width: 30%;
     border: 1px solid #1f4068;
     margin: 0 auto;
-    margin-top: 1%;
     border-radius: 0.2em;
     color: white;
     font-weight: 900;
